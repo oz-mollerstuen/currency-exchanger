@@ -1,6 +1,6 @@
 {
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2022,
     "sourceType": "module"
   },
   "extends": "eslint:recommended",
@@ -13,6 +13,6 @@
   "rules": {
     "semi": 1,
     "indent": ["warn", 2],
-    "no-console": "warn"
+    "no-console": 0
   }
 }

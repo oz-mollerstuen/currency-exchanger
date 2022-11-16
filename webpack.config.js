@@ -4,6 +4,7 @@ const {
   CleanWebpackPlugin
 } = require('clean-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const DotEnv = require("dotenv-webpack");
 
 module.exports = {
   entry: './src/index.js',
@@ -18,6 +19,7 @@ module.exports = {
   plugins: [
     new ESLintPlugin(),
     new CleanWebpackPlugin(),
+    new DotEnv(),
     new HtmlWebpackPlugin({
       title: 'UPDATE NAME HERE',
       template: './src/index.html',
