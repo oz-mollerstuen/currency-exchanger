@@ -1,3 +1,12 @@
+## Env keys
+* Ticketmaster
+event_key
+* Openweathermaps
+weather_key
+* Gnews
+news_key
+
+## Scripts
 
 Run: npm install webpack@4.46.0 --save-dev --save-exact
 

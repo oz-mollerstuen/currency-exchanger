@@ -1,4 +1,4 @@
-export default class Search {
+export default class Events {
   constructor(city, state, segment) {
     this.city = city;
     this.state = state;
@@ -8,9 +8,9 @@ export default class Search {
   }
 
   async events() {
-    const url = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${process.env.api_key}&radius=${this.radius}&unit=${this.unit}&city=${this.city}&segmentName=${this.segment}&sort=date,asc&stateCode=${this.state}`;
+    const url = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${process.env.event_key}&radius=${this.radius}&unit=${this.unit}&city=${this.city}&segmentName=${this.segment}&sort=date,asc&stateCode=${this.state}`;
     return new Promise((resolve) => {
-      fetch(url)
+      fetch(url, {mode: "cors"})
         .then((res) => {
           if (res.ok) {
             res.json()

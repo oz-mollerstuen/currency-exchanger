@@ -1,17 +1,101 @@
-import Search from "./scripts/search";
-import "Bootstrap";
-import "animate.css";
-import * as $ from "jquery";
-import AlertMagic from "sweetalert2";
+// IMPORTS
+
+// scripts
+import Events from "./scripts/events";
+import Weather from "./scripts/weather";
+import News from "./scripts/news";
+
+// css
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/styles.css";
 
+// named module imports
+import * as $ from "jquery";
+import AlertMagic from "sweetalert2";
+import feather from "feather-icons";
+
+// module imports
+import "Bootstrap";
+import "animate.css";
+
+
+// UTILS
 HTMLElement.prototype.removeAll = function() {
   while (this.lastChild) {
     this.removeChild(this.lastChild);
   }
 };
 
+function fetchError(thing) {
+  return AlertMagic.fire({
+    title: "Oh No!!",
+    text: `An error has occured while fetching ${thing} info :(`,
+    icon: "error",
+    confirmButtonText: "ok then"
+  });
+}
+
+// ELEMENTS
+
+// Temp elements
+function newTempElement(temp, city, state) {
+  const tempElement = $(`
+  <h1 class="display-5">${city}, ${state}</h1>
+  <h4><span><i data-feather="thermometer"></i></span><span id="degrees">${temp}</span>°F</h4>
+  `);
+  return tempElement;
+}
+
+async function showTemp(city, state) {
+  return new Promise((resolve) => {
+    const tempVar = new Weather(city, state);
+    const getTemp = tempVar.temp();
+    getTemp.then((temp) => {
+      if (temp) {
+        console.log(temp);
+        document.getElementById("temp-box").removeAll();
+        newTempElement(temp, city, state).appendTo("#temp-box");
+        feather.replace();
+        resolve(true);
+      }  else {
+        document.getElementById("jumbo-box").classList.add("invisible");
+        resolve(false);
+      }
+    });
+  });
+}
+
+// News elements
+function newsElements(title, img, source) {
+  const nElm = $(`
+  <h4>${title}</h4>
+  <img class="card-img" src="${img}">
+  <a class="btn btn-primary mt-2" href="${source}">Source</a>
+  `);
+  return nElm;
+}
+
+async function showNews(eType) {
+  return new Promise((resolve) => {
+    const newsVar = new News(eType);
+    newsVar.getNews()
+      .then((res) => {
+        if (res === false) {
+          resolve(false);
+        } else {
+          console.log(res);
+          const rand = Math.floor(Math.random() * res.length - 1);
+          const article = res[rand];
+          document.getElementById("news-box").removeAll();
+          newsElements(article.title, article.image, article.url).appendTo("#news-box");
+          document.getElementById("jumbo-box").classList.remove("invisible");
+          resolve(res);
+        }
+      });
+  });
+}
+
+// Event elements
 function newEvent(title, imgUrl, place, date, link) {
   const tempCard = $(`
   <div class="col">
@@ -33,25 +117,9 @@ function newEvent(title, imgUrl, place, date, link) {
   return tempCard;
 }
 
-function showError(msg) {
-  return AlertMagic.fire({
-    title: "Oh No!!",
-    text: msg,
-    icon: "error",
-    confirmButtonText: "ok then"
-  });
-}
-
-async function showInfo() {
-  0;
-}
-
-async function showEvents() {
-  let city1 = document.getElementById("city").value;
-  let state1 = document.getElementById("state").value;
-  let eType = document.getElementById("eType").value;
-  const searchVar = new Search(city1, state1, eType);
-  const events = searchVar.events();
+async function showEvents(city, state, eType) {
+  const eventSearch = new Events(city, state, eType);
+  const events = eventSearch.events();
   return new Promise((resolve) => {
     events.then((res) => {
       if (res) {
@@ -73,18 +141,36 @@ async function showEvents() {
   });
 }
 
+// Form submission
 document.querySelector('form').addEventListener("submit", (event) => {
   event.preventDefault();
-  showInfo()
+  const subButton = document.getElementById("submit-btn");
+  subButton.setAttribute("disabled", "");
+  // get input values
+  let city = document.getElementById("city").value;
+  let state = document.getElementById("state").value;
+  let eType = document.getElementById("eType").value;
+  // show tempature and news
+  showTemp(city, state)
     .then((good) => {
       if (!good) {
-        showError("An error has occured while fetching news info :(");
+        fetchError("tempature");
       }
     });
-  showEvents()
+  showNews(eType)
     .then((good) => {
       if (!good) {
-        showError("An error has occured while fetching event info :(");
+        fetchError("news");
       }
     });
+  // show event cards
+  showEvents(city, state, eType)
+    .then((good) => {
+      if (!good) {
+        fetchError("event");
+      }
+    });
+  setTimeout(() => {
+    subButton.removeAttribute("disabled");
+  }, 5000);
 });
