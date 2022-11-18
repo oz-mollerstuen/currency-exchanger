@@ -45,8 +45,8 @@ function getCurrency(currency, newCurrency, usd) {
 }
 
 function printElements (response, currency, newCurrency, usd) {
-  let conversionAmount = response.conversion_result;
-  document.getElementById("conversion-output").innerText = `Conversion: ${usd} ${currency} is worth ${conversionAmount} ${newCurrency}`;
+  let conversionAmount = Math.round(response.conversion_result);
+  document.getElementById("conversion-output").innerText = `Your Exchange of ${usd} ${currency} is worth: ${conversionAmount} ${newCurrency}`;
 }
 
 function printError (error) {

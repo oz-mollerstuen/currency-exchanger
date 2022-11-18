@@ -11,9 +11,9 @@
     <h1 class="text-center mb-3">Currency Exchange</h1>
     <hr class="w-75 m-auto">
     <form class="mt-3">
-      <div class="input">
-        <label for="usd">Amount to convert from</label>
-        <input type="integer" id="usd-input" name="usd-input" placeholder="Amount"><br><br>
+      <div class="input mb-3 w-50 m-auto text-center">
+        <label for="usd">Amount to convert</label>
+        <input type="integer" id="usd-input" name="usd-input" placeholder="The Exchanger is ready"><br><br>
         <select class="form-select form-select-lg form-control mb-3 w-50 m-auto text-center" id="base-currency" aria-label="dropdown">
           <option value="USD">Us Dollar (USD)</option>
           <option value="CHF">Swiss Franc (CHF)</option>
@@ -40,7 +40,7 @@
         <br>
         <button type="submit" id="submit-btn" class="btn btn-primary">Find Exchange Rate</button>
       </div>
-      <div class="output">
+      <div class="output mb-3 w-50 m-auto text-center"><br>
         <h2>Exchange</h2>
         <p id="conversion-output"></p>
       </div>
