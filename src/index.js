@@ -3,6 +3,9 @@
 // scripts
 import Exchange from "./scripts/exchange";
 
+// images
+
+
 
 // css
 import "bootstrap/dist/css/bootstrap.min.css";
