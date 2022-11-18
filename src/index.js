@@ -2,7 +2,7 @@
 
 // scripts
 import Events from "./scripts/events";
-import Weather from "./scripts/weather";
+import Exchange from "./scripts/exchange";
 import News from "./scripts/news";
 
 // css
@@ -46,9 +46,9 @@ function newTempElement(temp, city, state) {
   return tempElement;
 }
 
-async function showTemp(city, state) {
+async function showTemp(usd, exchanges) {
   return new Promise((resolve) => {
-    const tempVar = new Weather(city, state);
+    const tempVar = new Exchange(usd, exchanges);
     const getTemp = tempVar.temp();
     getTemp.then((temp) => {
       if (temp) {
@@ -95,29 +95,8 @@ async function showNews(eType) {
   });
 }
 
-// Event elements
-function newEvent(title, imgUrl, place, date, link) {
-  const tempCard = $(`
-  <div class="col">
-  <div class="card mb-3 mr-1 animate__animated animate__zoomInDown">
-    <div class="card-body">
-      <h3 class="card-title text-center">${title}</h3>
-      <hr>
-      <img class="card-img" src="${imgUrl}">
-      <hr>
-      <h5 class="card-text text-wrap text-center">Venue: ${place}</h5>
-      <h5 class="card-text text-wrap text-center">${date[1]}-${date[2]} ${date[0]}</h5>
-      <div class="w-25 m-auto">
-        <a href="${link}" class="text-center btn btn-primary">Info and price</a>
-      </div>
-    </div>
-  </div>
-</div>
-  `);
-  return tempCard;
-}
 
-async function showEvents(city, state, eType) {
+async function showExchange(usd, exchanges, eType) {
   const eventSearch = new Events(city, state, eType);
   const events = eventSearch.events();
   return new Promise((resolve) => {
@@ -147,16 +126,10 @@ document.querySelector('form').addEventListener("submit", (event) => {
   const subButton = document.getElementById("submit-btn");
   subButton.setAttribute("disabled", "");
   // get input values
-  let city = document.getElementById("city").value;
-  let state = document.getElementById("state").value;
+  let usd = document.getElementById("usd").value;
+  let exchanges = document.getElementById("exchanges").value;
   let eType = document.getElementById("eType").value;
   // show tempature and news
-  showTemp(city, state)
-    .then((good) => {
-      if (!good) {
-        fetchError("tempature");
-      }
-    });
   showNews(eType)
     .then((good) => {
       if (!good) {
@@ -164,7 +137,7 @@ document.querySelector('form').addEventListener("submit", (event) => {
       }
     });
   // show event cards
-  showEvents(city, state, eType)
+  showExchange(usd, exchange, eType)
     .then((good) => {
       if (!good) {
         fetchError("event");

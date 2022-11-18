@@ -8,7 +8,7 @@ export default class Events {
   }
 
   async events() {
-    const url = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${process.env.event_key}&radius=${this.radius}&unit=${this.unit}&city=${this.city}&segmentName=${this.segment}&sort=date,asc&stateCode=${this.state}`;
+    const url = `https://v6.exchangerate-api.com/v6/f3fc82d54a4d03f53256c65f/pair/USD/GBP`;
     return new Promise((resolve) => {
       fetch(url, {mode: "cors"})
         .then((res) => {
