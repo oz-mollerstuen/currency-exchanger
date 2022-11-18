@@ -25,12 +25,12 @@ HTMLElement.prototype.removeAll = function() {
   }
 };
 
-function fetchError(thing) {
+function fetchError() {
   return AlertMagic.fire({
     title: "Oh No!!",
-    text: `An error has occured while fetching ${thing} info :(`,
+    text: `An error has occured while fetching your money info :(`,
     icon: "error",
-    confirmButtonText: "ok then"
+    confirmButtonText: "Thanks for nothing..."
   });
 }
 function getCurrency(currency, newCurrency, usd) {
@@ -65,7 +65,7 @@ function handleForm (e) {
   outputs.innerHTML = null;
   let currency = document.getElementById("base-currency").value;
   let newCurrency = document.getElementById("target-currency").value;
-  let usd = parseInt(document.querySelector("input#usd-input").value);
+  let usd = parseInt(document.querySelector("usd-input"));
   getCurrency(currency, newCurrency, usd);
 }
 

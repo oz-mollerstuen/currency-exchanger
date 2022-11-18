@@ -11,31 +11,31 @@
     <h1 class="text-center mb-3">Currency Exchange</h1>
     <hr class="w-75 m-auto">
     <form class="mt-3">
-      <div class="form-group text-center">
-        <label for="usd">Amont to convert from</label>
+      <div class="input">
+        <label for="usd">Amount to convert from</label>
         <input type="integer" id="usd-input" name="usd-input" placeholder="Amount"><br><br>
-        <select class="form-select form-select-lg form-control mb-3 w-50 m-auto text-center" id="exFrom" aria-label="dropdown">
-          <option>Us Dollar (USD)</option>
-          <option>Swiss Franc (CHF)</option>
-          <option>Danish Krone (DKK)</option>
-          <option>European Euro (EUR)</option>
-          <option>UK Pound (GBP)</option>
-          <option>Hong Kong Dollar (HKD)</option>
-          <option>Indian Rupee (INR)</option>
-          <option>Thai Baht (THB)</option>
-          <option>Norwegian Krone (NOK)</option>
+        <select class="form-select form-select-lg form-control mb-3 w-50 m-auto text-center" id="base-currency" aria-label="dropdown">
+          <option value="USD">Us Dollar (USD)</option>
+          <option value="CHF">Swiss Franc (CHF)</option>
+          <option value="DKK">Danish Krone (DKK)</option>
+          <option value="EUR">European Euro (EUR)</option>
+          <option value="GBP">UK Pound (GBP)</option>
+          <option value="HKD">Hong Kong Dollar (HKD)</option>
+          <option value="INR">Indian Rupee (INR)</option>
+          <option value="THB">Thai Baht (THB)</option>
+          <option value="NOK">Norwegian Krone (NOK)</option>
         </select>
         <br>
-        <select class="form-select form-select-lg form-control mb-3 w-50 m-auto text-center" id="exTo" aria-label="dropdown">
-          <option>Us Dollar (USD)</option>
-          <option>Swiss Franc (CHF)</option>
-          <option>Danish Krone (DKK)</option>
-          <option>European Euro (EUR)</option>
-          <option>UK Pound (GBP)</option>
-          <option>Hong Kong Dollar (HKD)</option>
-          <option>Indian Rupee (INR)</option>
-          <option>Thai Baht (THB)</option>
-          <option>Norwegian Krone (NOK)</option>
+        <select class="form-select form-select-lg form-control mb-3 w-50 m-auto text-center" id="target-currency" aria-label="dropdown">
+          <option value="USD">Us Dollar (USD)</option>
+          <option value="CHF">Swiss Franc (CHF)</option>
+          <option value="DKK">Danish Krone (DKK)</option>
+          <option value="EUR">European Euro (EUR)</option>
+          <option value="GBP">UK Pound (GBP)</option>
+          <option value="HKD">Hong Kong Dollar (HKD)</option>
+          <option value="INR">Indian Rupee (INR)</option>
+          <option value="THB">Thai Baht (THB)</option>
+          <option value="NOK">Norwegian Krone (NOK)</option>
         </select>
         <br>
         <button type="submit" id="submit-btn" class="btn btn-primary">Find Exchange Rate</button>
