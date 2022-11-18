@@ -65,7 +65,7 @@ function handleForm (e) {
   outputs.innerHTML = null;
   let currency = document.getElementById("base-currency").value;
   let newCurrency = document.getElementById("target-currency").value;
-  let usd = parseInt(document.querySelector("usd-input"));
+  let usd = parseInt(document.querySelector("input#usd-input").value);
   getCurrency(currency, newCurrency, usd);
 }
 
