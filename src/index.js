@@ -1,18 +1,17 @@
 // IMPORTS
 
 // scripts
-import Events from "./scripts/events";
 import Exchange from "./scripts/exchange";
-import News from "./scripts/news";
+
 
 // css
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/styles.css";
 
 // named module imports
-import * as $ from "jquery";
+
 import AlertMagic from "sweetalert2";
-import feather from "feather-icons";
+
 
 // module imports
 import "Bootstrap";
@@ -34,116 +33,42 @@ function fetchError(thing) {
     confirmButtonText: "ok then"
   });
 }
-
-// ELEMENTS
-
-// Temp elements
-function newTempElement(temp, city, state) {
-  const tempElement = $(`
-  <h1 class="display-5">${city}, ${state}</h1>
-  <h4><span><i data-feather="thermometer"></i></span><span id="degrees">${temp}</span>°F</h4>
-  `);
-  return tempElement;
-}
-
-async function showTemp(usd, exchanges) {
-  return new Promise((resolve) => {
-    const tempVar = new Exchange(usd, exchanges);
-    const getTemp = tempVar.temp();
-    getTemp.then((temp) => {
-      if (temp) {
-        console.log(temp);
-        document.getElementById("temp-box").removeAll();
-        newTempElement(temp, city, state).appendTo("#temp-box");
-        feather.replace();
-        resolve(true);
+function getCurrency(currency, newCurrency, usd) {
+  Exchange.getCurrency(currency, newCurrency, usd)
+    .then(function(response) {
+      if(response.conversion_result) {
+        printElements(response, currency, newCurrency, usd);
       }  else {
-        document.getElementById("jumbo-box").classList.add("invisible");
-        resolve(false);
+        printError(response, currency,  newCurrency, usd);
       }
     });
-  });
 }
 
-// News elements
-function newsElements(title, img, source) {
-  const nElm = $(`
-  <h4>${title}</h4>
-  <img class="card-img" src="${img}">
-  <a class="btn btn-primary mt-2" href="${source}">Source</a>
-  `);
-  return nElm;
+function printElements (response, currency, newCurrency, usd) {
+  let conversionAmount = response.conversion_result;
+  document.getElementById("conversion-output").innerText = `Conversion: ${usd} ${currency} is worth ${conversionAmount} ${newCurrency}`;
 }
 
-async function showNews(eType) {
-  return new Promise((resolve) => {
-    const newsVar = new News(eType);
-    newsVar.getNews()
-      .then((res) => {
-        if (res === false) {
-          resolve(false);
-        } else {
-          console.log(res);
-          const rand = Math.floor(Math.random() * res.length - 1);
-          const article = res[rand];
-          document.getElementById("news-box").removeAll();
-          newsElements(article.title, article.image, article.url).appendTo("#news-box");
-          document.getElementById("jumbo-box").classList.remove("invisible");
-          resolve(res);
-        }
-      });
-  });
+function printError (error) {
+  let outputs = document.getElementById("conversion-output");
+  outputs.innerHTML = null;
+  if (error.toString().includes('404')){
+    outputs.innerText = fetchError()
+  } else {
+    outputs.innerText = fetchError()
+  }
 }
 
-
-async function showExchange(usd, exchanges, eType) {
-  const eventSearch = new Events(city, state, eType);
-  const events = eventSearch.events();
-  return new Promise((resolve) => {
-    events.then((res) => {
-      if (res) {
-        console.log(res);
-        document.getElementById("event-box").removeAll();
-        res.forEach((ev) => {
-          const name = ev.name;
-          const img = ev.images[0].url;
-          const venue = ev._embedded.venues[0].name;
-          const date = ev.dates.start.localDate.split("-");
-          const sales = ev.url;
-          const evCard = newEvent(name, img, venue, date, sales);
-          evCard.appendTo("#event-box");
-        });
-        resolve(true);
-      }
-      resolve(false);
-    });
-  });
+function handleForm (e) {
+  e.preventDefault();
+  let outputs = document.getElementById("conversion-output");
+  outputs.innerHTML = null;
+  let currency = document.getElementById("base-currency").value;
+  let newCurrency = document.getElementById("target-currency").value;
+  let usd = parseInt(document.querySelector("input#usd-input").value);
+  getCurrency(currency, newCurrency, usd);
 }
 
-// Form submission
-document.querySelector('form').addEventListener("submit", (event) => {
-  event.preventDefault();
-  const subButton = document.getElementById("submit-btn");
-  subButton.setAttribute("disabled", "");
-  // get input values
-  let usd = document.getElementById("usd").value;
-  let exchanges = document.getElementById("exchanges").value;
-  let eType = document.getElementById("eType").value;
-  // show tempature and news
-  showNews(eType)
-    .then((good) => {
-      if (!good) {
-        fetchError("news");
-      }
-    });
-  // show event cards
-  showExchange(usd, exchange, eType)
-    .then((good) => {
-      if (!good) {
-        fetchError("event");
-      }
-    });
-  setTimeout(() => {
-    subButton.removeAttribute("disabled");
-  }, 5000);
+window.addEventListener("load", function() {
+  document.querySelector('form').addEventListener("submit", handleForm);
 });

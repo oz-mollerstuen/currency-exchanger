@@ -32,6 +32,6 @@
     "animate.css": "^4.1.1",
     "bootstrap": "^4.5.3",
     "feather-icons": "^4.29.0",
-    "sweetalert2": "^11.6.8"
+    "sweetalert2": "^11.6.9"
   }
 }
