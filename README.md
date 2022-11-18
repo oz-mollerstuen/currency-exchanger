@@ -1,11 +1,6 @@
 ## Env keys
-* Ticketmaster
-event_key
-* Openweathermaps
-weather_key
-* Gnews
-news_key
-
+* ExchangeRate-API
+API key
 ## Scripts
 
 Run: npm install webpack@4.46.0 --save-dev --save-exact
@@ -37,8 +32,6 @@ npm install file-loader --save-dev(install for webpack for images)
 npm install html-loader@1.3.2 --save-dev((install for webpack for images)
 
 
-Installing all packages with $ npm install.
-Building the project using webpack with $ npm run build
-Starting a development server with $ npm run start
-Linting JS files in the src folder with $ npm run lint
-Running tests with Jest using $ npm run test
+Install all packages with $ npm install.
+Build the project using webpack with $ npm run build
+Start a development server with $ npm run start

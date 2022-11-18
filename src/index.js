@@ -28,7 +28,7 @@ HTMLElement.prototype.removeAll = function() {
 function fetchError() {
   return AlertMagic.fire({
     title: "Oh No!!",
-    text: `An error has occured while fetching your money info :(`,
+    text: `An error has occured while fetching your exchange info. Please only use numerics and whole numbers.`,
     icon: "error",
     confirmButtonText: "Thanks for nothing..."
   });
