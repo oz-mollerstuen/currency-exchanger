@@ -1,3 +1,13 @@
 body {
+background: radial-gradient(circle, rgb(223, 8, 162), rgb(195, 232, 8));
+font-family: fantasy;
+color: rgb(11, 230, 172);
+}
 
+
+p {
+    font-weight: 8000;
+    font-size: x-large;
+    font-family: monospace;
+    color: rgb(79, 36, 11);
 }
